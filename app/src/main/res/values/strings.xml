@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">PrisonTrainings</string>
+    <string name="activity_image_trans">icon_train_transition</string>
+    <string name="activity_name_trans">name_train_transition</string>
+    <string name="activity_level_trans">level_train_transition</string>
+
+    <string-array name="trainings">
+        <item>Упражнение 1</item>
+        <item>Упражнение 2</item>
+        <item>Упражнение 3</item>
+        <item>Упражнение 4</item>
+        <item>Упражнение 5</item>
+        <item>Упражнение 6</item>
+    </string-array>
+
+    <string name="trening_name_1_1">Упражнение 1</string>
+    <string name="trening_description_1_1">Описание упражнения 1</string>
+    <string name="trening_attempts_1_1">10-10-10-10</string>
+
+    <string name="trening_name_2_1">Упражнение 2</string>
+    <string name="trening_description_2_1">Описание упражнения 2</string>
+    <string name="trening_attempts_2_1">20-20-20-20</string>
+
+    <string name="trening_name_3_1">Упражнение 3</string>
+    <string name="trening_description_3_1">Описание упражнения 3</string>
+    <string name="trening_attempts_3_1">30-30-30-30</string>
+
+    <string name="trening_name_4_1">Упражнение 4</string>
+    <string name="trening_description_4_1">Описание упражнения 4</string>
+    <string name="trening_attempts_4_1">40-40-40</string>
+
+    <string name="trening_name_5_1">Упражнение 5</string>
+    <string name="trening_description_5_1">Описание упражнения 5</string>
+    <string name="trening_attempts_5_1">50-50</string>
+
+    <string name="trening_name_6_1">Упражнение 6</string>
+    <string name="trening_description_6_1">Описание упражнения 6</string>
+    <string name="trening_attempts_6_1">60-60</string>
+
+    <string name="trening_name_1_2">Упражнение 1 л2</string>
+    <string name="trening_description_1_2">Описание упражнения 1 л2</string>
+    <string name="trening_attempts_1_2">10-20-10-10</string>
+
+    <string name="trening_name_1_3">Упражнение 1 л3</string>
+    <string name="trening_description_1_3">Описание упражнения 1 л3</string>
+    <string name="trening_attempts_1_3">10-20-10-10</string>
+
+    <string name="trening_name_1_4">Упражнение 1 л4</string>
+    <string name="trening_description_1_4">Описание упражнения 1 л4</string>
+    <string name="trening_attempts_1_4">10-20-10-10</string>
+
+    <string name="trening_name_2_2">Упражнение 2 л2</string>
+    <string name="trening_description_2_2">Описание упражнения 2 л2</string>
+    <string name="trening_attempts_2_2">20-20-10-10</string>
+
+    <string name="trening_name_3_2">Упражнение 3 л2</string>
+    <string name="trening_description_3_2">Описание упражнения 3 л2</string>
+    <string name="trening_attempts_3_2">30-20-30-30</string>
+
+    <string name="trening_name_4_2">Упражнение 4 л2</string>
+    <string name="trening_description_4_2">Описание упражнения 4 л2</string>
+    <string name="trening_attempts_4_2">40-20-40</string>
+
+    <string name="trening_name_5_2">Упражнение 5 л2</string>
+    <string name="trening_description_5_2">Описание упражнения 5 л2</string>
+    <string name="trening_attempts_5_2">50-50-20</string>
+
+    <string name="trening_name_6_2">Упражнение 6 л2</string>
+    <string name="trening_description_6_2">Описание упражнения 6 л2</string>
+    <string name="trening_attempts_6_2">60-60-20</string>
+
+
+</resources>

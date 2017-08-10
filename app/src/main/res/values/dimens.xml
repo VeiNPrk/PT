@@ -1,0 +1,9 @@
+<resources>
+    <dimen name="cv_big_text_size">25sp</dimen>
+    <dimen name="cv_midl_text_size">20sp</dimen>
+    <dimen name="cv_text_size">15sp</dimen>
+
+    <dimen name="big_text_size">20sp</dimen>
+    <dimen name="midle_text_size">16sp</dimen>
+    <dimen name="small_text_size">10sp</dimen>
+</resources>
