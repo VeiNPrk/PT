@@ -51,7 +51,7 @@ public class ActivityMain extends AppCompatActivity {
 	}
 	
 	private void toStatistic(){
-        ActivityStatistics.openActivity(this);
+        ActivityStatistics.openActivity(this,1);
 	}
 	
 	private void toAbout(){

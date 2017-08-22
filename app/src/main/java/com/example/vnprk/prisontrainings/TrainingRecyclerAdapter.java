@@ -68,6 +68,10 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
         notifyItemChanged(pos);
     }
 
+    public int getSelection() {
+        return selectedItems.keyAt(0);
+    }
+
     public void clearSelections() {
         selectedItems.clear();
         notifyDataSetChanged();
@@ -94,7 +98,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
             @Override
             public boolean onLongClick(View v){
                 int position = viewHolder.getAdapterPosition();
-                trainingClickListener.onTrainingLongClick(position);
+                trainingClickListener.onTrainingLongClick(ivTrainIcon, position);
                 return false;
             }
         });
@@ -120,7 +124,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
 
     public interface TrainingClickListener {
         void onTrainingClick(View trainImage, int position);
-        void onTrainingLongClick(int position);
+        void onTrainingLongClick(View trainImage, int position);
     }
 }
 

@@ -10,6 +10,7 @@
 		android:id="@+id/rv_trainings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+		android:layoutAnimation="@anim/lv_animation"
         tools:context=".ActivityMain"
         tools:listitem="@layout/rv_item"/>
 	<Button

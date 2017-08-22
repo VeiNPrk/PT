@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,7 +16,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -39,6 +43,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 	List<ClassTraining> trainings;
     ActionMode actionMode;
 	DataResCompound dataRes = null;
+    View imTransitionView = null;
 
 	public static void openActivity(Context context){
         Intent intent = new Intent(context, ActivityTrainList.class);
@@ -97,6 +102,8 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rvTrainings.addItemDecoration(itemDecoration);
         rvTrainings.setItemAnimator(new DefaultItemAnimator());
+        /*LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.s);
+        rvTrainings.setLayoutAnimation(animation);*/
         //rvTrainings.addOnItemTouchListener(this);
     }
 	
@@ -104,7 +111,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 		@Override
 		public void onTrainingClick(View trainImage, int position){
             if (actionMode != null) {
-                myToggleSelection(position);
+                myToggleSelection(position,trainImage);
                 return;
             }
 			goToTraining(trainings.get(position), trainImage);
@@ -112,12 +119,12 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 		}
 		
 		@Override
-		public void onTrainingLongClick(int position){
+		public void onTrainingLongClick(View trainImage, int position){
             if (actionMode != null) {
                 return;
             }
             actionMode = startActionMode(ActivityTrainList.this);
-            myToggleSelection(position);
+            myToggleSelection(position,trainImage);
 		}
 	};
 	
@@ -155,8 +162,8 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 			tf = nowDate.get(Calendar.YEAR) == trainingDate.get(Calendar.YEAR) &&
 					nowDate.get(Calendar.DAY_OF_YEAR) == trainingDate.get(Calendar.DAY_OF_YEAR);
 		}
-		//return tf;
-        return false;
+		return tf;
+        //return false;
 	}
 	
 	private void initStartData(){
@@ -199,11 +206,13 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     @Override
     public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.menu_edit:
+            case R.id.menu_stat:
+                goToStat(adapter.getSelection());
                 //editElementView(notes.get(selectedPositions.get(0)));
                 actionMode.finish();
                 return true;
-            case R.id.menu_delete:
+            case R.id.menu_info:
+                goToInfo(adapter.getSelection());
                 //deleteElement(selectedPositions);
                 actionMode.finish();
                 return true;
@@ -220,16 +229,27 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
         //fab.setVisibility(View.VISIBLE);
     }
 
-    private void myToggleSelection(int idx) {
+    private void myToggleSelection(int idx, View imageView) {
         adapter.toggleSelection(idx);
-        /*selectedPositions=adapter.getSelectedItems();//refreshSelectedPositions();//nowPositionList = getLastCheckedNote();
-        if(selectedPositions.size()>1) {
-            editItem.setVisible(false);
+        imTransitionView = imageView;
+    }
+
+    private void goToStat(int idx){
+        ActivityStatistics.openActivity(this, trainings.get(idx).getTypeTrening());
+    }
+
+    private void goToInfo(int idx){
+        Intent intent = new Intent(ActivityTrainList.this, ActivityTrainInfo.class);
+        intent.putExtra(ClassTraining.KEY_TR_TYPE, trainings.get(idx).getTypeTrening());
+        intent.putExtra(ClassTraining.KEY_TR_LVL, trainings.get(idx).getLvlTrening());
+        ActivityOptionsCompat options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this,
+                        Pair.create((View)imTransitionView, getString(R.string.activity_image_trans)));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            startActivity(intent, options.toBundle());
         }
-        else {
-            editItem.setVisible(true);
-            if(selectedPositions.size()==0)
-                actionMode.finish();
-        }*/
+        else
+            startActivity(intent);
     }
 }

@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="Редактировать"
-        android:id="@+id/menu_edit"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Статистика"
+        android:id="@+id/menu_stat"
+        android:icon="@mipmap/ic_chart_line"
         app:showAsAction="always"/>
     <item
-        android:title="Удалить"
-        android:id="@+id/menu_delete"
-        android:icon="@android:drawable/ic_menu_delete"/>
+        android:title="Информациия"
+        android:id="@+id/menu_info"
+        android:icon="@android:drawable/ic_menu_info_details"/>
 </menu>

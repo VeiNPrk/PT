@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ActivityStatistics extends AppCompatActivity implements
         OnChartGestureListener, OnChartValueSelectedListener {
-
+    public static final String TYPE_TREN_KEY = "type_trening_key";
     LineChart mChart;
     Spinner spnTrain;
     int typeTrening = 1;
@@ -50,8 +50,9 @@ public class ActivityStatistics extends AppCompatActivity implements
     DataResCompound dataRes;
     ClassCharts chartsData;
 
-    public static void openActivity(Context context){
+    public static void openActivity(Context context, int type){
         Intent intent = new Intent(context, ActivityStatistics.class);
+        intent.putExtra(TYPE_TREN_KEY, type);
         /*if (!(context instanceof Activity))
             intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);*/
         context.startActivity(intent);
@@ -63,6 +64,7 @@ public class ActivityStatistics extends AppCompatActivity implements
         setContentView(R.layout.activity_statistics);
         dataRes = DataResCompound.getInstance();
         chartsData = new ClassCharts();
+        typeTrening = getIntent().getIntExtra(TYPE_TREN_KEY,1);
         initViews();
         initData();
 
@@ -139,6 +141,7 @@ public class ActivityStatistics extends AppCompatActivity implements
             mChart.setData(null);
         }*/
         mChart.invalidate(); // refresh
+        mChart.animateY(500);
     }
     private void initChart(){
         mChart.setOnChartGestureListener(this);
