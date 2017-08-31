@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,6 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+//import fr.ganfra.materialspinner.MaterialSpinner;
+
+//import com.jaredrummler.materialspinner.MaterialSpinner;
 
 /**
  * Created by VNPrk on 27.04.2017.
@@ -39,6 +44,7 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
     int typeTrening = -1;
     int lvlTrening = -1;
 
+    //MaterialSpinner spnTrain;
     Spinner spnTrain;
 
     TextView tv;
@@ -70,6 +76,7 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
         animation1 = new AnimationClass(this);
         animation2 = new AnimationClass(this);
         animation3 = new AnimationClass(this);
+        tvDescript.setMovementMethod(new ScrollingMovementMethod());
 /*
         in = AnimationUtils.loadAnimation(this,  android.R.anim.slide_in_left);
         out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
@@ -96,9 +103,21 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
     }
 
     private void setSpinner() {
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.trainings, android.R.layout.simple_spinner_item);
+        //ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.trainings, R.layout.spiner_layout);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.trainings, android.R.layout.simple_spinner_dropdown_item);
         spnTrain.setAdapter(adapter);
+        //spnTrain.setSelectedIndex(typeTrening-1);
         spnTrain.setSelection(typeTrening-1);
+        /*spnTrain.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                if(isStart>0) {
+                    lvlTrening = 1;
+                    typeTrening=position+1;
+                    alphaViewTraining();
+                }
+                isStart++;
+            }
+        });*/
         spnTrain.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -133,10 +152,11 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         //super.onRestoreInstanceState(savedInstanceState);
-            typeTrening=savedInstanceState.getInt(TYPE_TRENING_KEY,1);
-            lvlTrening=savedInstanceState.getInt(LVL_TRENING_KEY,-1);
-            viewTraining();
-            spnTrain.setSelection(typeTrening-1);
+        typeTrening = savedInstanceState.getInt(TYPE_TRENING_KEY, 1);
+        lvlTrening = savedInstanceState.getInt(LVL_TRENING_KEY, -1);
+        viewTraining();
+        //spnTrain.setSelectedIndex(typeTrening-1);
+        spnTrain.setSelection(typeTrening - 1);
     }
 
     private String getStringId(int type){

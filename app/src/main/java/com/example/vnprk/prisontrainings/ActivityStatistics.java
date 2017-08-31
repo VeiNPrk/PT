@@ -95,7 +95,7 @@ public class ActivityStatistics extends AppCompatActivity implements
     }
 
     private void setSpinner() {
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.trainings, android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.trainings, android.R.layout.simple_spinner_dropdown_item);
         spnTrain.setAdapter(adapter);
         spnTrain.setSelection(typeTrening-1);
         spnTrain.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

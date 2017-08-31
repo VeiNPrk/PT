@@ -133,25 +133,33 @@
 
     <Button
         android:id="@+id/btn_next_attempt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="-82dp"
         android:text="Следующий подход"
+        android:textColor="@color/colorIcons"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/np_num_attempts"
-        tools:text="Следующий подход" />
+        tools:text="Следующий подход"
+        app:layout_constraintLeft_toRightOf="@+id/np_num_attempts"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.628" />
 
     <Button
         android:id="@+id/btn_end_attempts"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="15dp"
         android:text="Закончить упражнение"
+        android:textColor="@color/colorIcons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="Закончить упражнение" />
+        tools:text="Закончить упражнение"
+        app:layout_constraintLeft_toRightOf="@+id/np_num_attempts"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.674" />
 
     <ImageView
         android:id="@+id/im_check_training"
