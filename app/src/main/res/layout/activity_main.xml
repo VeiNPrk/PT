@@ -6,25 +6,29 @@
     android:layout_height="match_parent"
     tools:context="com.example.vnprk.prisontrainings.ActivityMain">
     <Button
+
         android:id="@+id/btn_start_training"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Начать тренировку"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="@dimen/side_padding_main"
         android:layout_marginTop="8dp"
         android:layout_marginRight="@dimen/side_padding_main"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/colorIcons"
+        android:layout_marginStart="@dimen/side_padding_main"
+        android:layout_marginEnd="@dimen/side_padding_main"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="@dimen/side_padding_main"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/colorIcons"
-        app:layout_constraintVertical_bias="0.362" />
+        app:layout_constraintVertical_bias="0.362"
+        />
 
     <Button
         android:id="@+id/btn_statistic"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Статистика"
         android:layout_marginLeft="@dimen/side_padding_main"
@@ -36,11 +40,13 @@
         android:layout_marginTop="8dp"
         android:textColor="@color/colorIcons"
         app:layout_constraintTop_toBottomOf="@+id/btn_start_training"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="@dimen/side_padding_main"
+        android:layout_marginEnd="@dimen/side_padding_main" />
 
     <Button
         android:id="@+id/btn_about"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="О приложении"
         android:layout_marginTop="8dp"
@@ -52,6 +58,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:textColor="@color/colorIcons"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="@dimen/side_padding_main"
+        android:layout_marginEnd="@dimen/side_padding_main" />
 
 </android.support.constraint.ConstraintLayout>

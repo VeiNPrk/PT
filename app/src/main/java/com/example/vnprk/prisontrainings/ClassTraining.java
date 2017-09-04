@@ -93,9 +93,10 @@ public class ClassTraining extends BaseModel implements Serializable {
     }
 
 	public void setMyAttempts(){
-        for (String attempts : myStrAttempts.split("-")) {
-            myAttempts.add(Integer.parseInt(attempts));
-        }
+        if(myStrAttempts.length()>0)
+            for (String attempts : myStrAttempts.split("-")) {
+                myAttempts.add(Integer.parseInt(attempts));
+            }
     }
 	
     public void addMyAttempts(int _count){
@@ -137,7 +138,11 @@ public class ClassTraining extends BaseModel implements Serializable {
         return STR_IMAGE + typeTrening + "_" + lvlTrening;
     }
 
-	public int getTypeTrening(){
+    public ArrayList<Integer> getMyAttempts()
+    {
+        return myAttempts;
+    }
+    public int getTypeTrening(){
         return typeTrening;
     }
 	
@@ -190,5 +195,10 @@ public class ClassTraining extends BaseModel implements Serializable {
             tf=true;
 
         return tf;
+    }
+
+    private void clearAttempts(){
+        myStrAttempts = "";
+        myAttempts.clear();
     }
 }

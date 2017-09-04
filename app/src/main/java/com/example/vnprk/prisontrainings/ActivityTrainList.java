@@ -2,9 +2,12 @@ package com.example.vnprk.prisontrainings;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,6 +23,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -38,7 +42,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     public final static int RESULT_CODE_TRAIN = 111;
 
 	RecyclerView rvTrainings;
-	Button btnEndTraining;
+	//Button btnEndTraining;
     TrainingRecyclerAdapter adapter;
 	List<ClassTraining> trainings;
     ActionMode actionMode;
@@ -64,7 +68,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     }
 
     private void initViews(){
-		btnEndTraining = (Button)findViewById(R.id.btn_end_train);
+		//btnEndTraining = (Button)findViewById(R.id.btn_end_train);
         rvTrainings = (RecyclerView) findViewById(R.id.rv_trainings);
 
     }
@@ -80,7 +84,8 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 		for (ClassTraining train : trainings) {
 
             train.setNeedAttempts(dataRes.getTextRes(train.getIdAttempts())/*getString(getResources().getIdentifier(train.getIdAttempts(),"string",getApplicationContext().getPackageName()))*/);
-        }
+            train.setMyAttempts();
+		}
     }
 
     private void refreshData(){
@@ -130,14 +135,21 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 	
 	private void goToTraining(ClassTraining _training, View trainImage){
 		Date nowDate = new Date();
-		if(!compareTrainingDates(_training)){
+		if(!compareTrainingDates(_training) || _training.getLastTraining()==0){
 			Intent intent = new Intent(ActivityTrainList.this, ActivityTrainNow.class);
 			intent.putExtra(ClassTraining.KEY_TRAINING, _training);
 			startActivityTransition(intent, RESULT_CODE_TRAIN, trainImage);
 		}
 		else
 		{
-			Toast.makeText(this, "Сегодня вы уже делали данное упражнение, попробуйте завтра", Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_list),"Сегодня вы уже делали данное упражнение, попробуйте завтра", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null);
+            View snackbarView = snackbar.getView();
+            TextView snackTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+            snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
+            snackbar.setDuration(4000); // 8 секунд
+            snackbar.show();
+			//Toast.makeText(this, "Сегодня вы уже делали данное упражнение, попробуйте завтра", Toast.LENGTH_LONG).show();
 		}
 		//поставить else
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,7 @@ import com.raizlabs.android.dbflow.sql.language.Select;
  * Created by VNPrk on 27.04.2017.
  */
 
-public class ActivityTrainNow extends AppCompatActivity {
+public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragment.MyDialogListener {
 	
 	public static final String SAVED_TRAINING_KEY="saved_tr_key";
 	public static final String COUNT_TRAINING_KEY="saved_count_key";
@@ -40,6 +41,7 @@ public class ActivityTrainNow extends AppCompatActivity {
 	Button btnNextAttempt;
 	Button btnEndAttempts;
 	NumberPicker numAttempt;
+	MyDialogFragment dialog;
 	
 	int countAttempts = 1;
 	
@@ -58,6 +60,7 @@ public class ActivityTrainNow extends AppCompatActivity {
 		initViews();
 		initData();
 		setListeners();
+		checkLevelTraining();
     }
 	
 	private void initViews(){
@@ -74,6 +77,7 @@ public class ActivityTrainNow extends AppCompatActivity {
 		numAttempt = (NumberPicker)findViewById(R.id.np_num_attempts);
 		numAttempt.setMaxValue(100);
 		numAttempt.setMinValue(0);
+		dialog = new MyDialogFragment();
     }
 	
 	private void initData(){
@@ -82,7 +86,7 @@ public class ActivityTrainNow extends AppCompatActivity {
 		tvNameTraining.setText(dataRes.getTextRes(training.getIdName())/*getString(getResources().getIdentifier(training.getIdName(),"string",getApplicationContext().getPackageName()))*/);
 		tvLevelTraining.setText("Уровень "+training.getLvlTrening());
 		tvNeedAtempts.setText(training.getStrNeedAttempts());
-		//tvMyAttempts.setText(training.getMyStrAttempts());
+		tvMyAttempts.setText(training.getMyStrAttempts());
 		tvNowAttempts.setText("Текущий подход "+countAttempts);
 
 	}
@@ -140,6 +144,7 @@ public class ActivityTrainNow extends AppCompatActivity {
 		if(numAttempt.getValue()>0){
 			if(countAttempts+1<11){
 				training.addMyAttempts(numAttempt.getValue());
+				training.setLastDateTraining();
 				tvMyAttempts.setText(training.getMyStrAttempts());
 				checkLevelTraining();
 				numAttempt.setValue(0);
@@ -202,5 +207,26 @@ public class ActivityTrainNow extends AppCompatActivity {
 		}
 		else
 			startActivity(intent);
+	}
+	@Override
+	public void onBackPressed()
+	{
+		dialog.show(getSupportFragmentManager(), "MyDialog");
+		// code here to show dialog
+		//super.onBackPressed();  // optional depending on your needs
+	}
+
+	@Override
+	public void onYesClicked(DialogFragment dialog) {
+		Log.d("123", "Dialog onYesClicked");
+		setResult(RESULT_OK, null);
+		super.onBackPressed();
+	}
+
+	@Override
+	public void onNoClicked(DialogFragment dialog) {
+		Log.d("123", "Dialog onNoClicked");
+		setResult(RESULT_OK, null);
+		super.onBackPressed();
 	}
 }
