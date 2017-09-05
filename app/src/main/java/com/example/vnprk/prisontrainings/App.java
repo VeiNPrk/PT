@@ -30,14 +30,15 @@ public class App extends Application {
 
     private void CheckTreining(){
         trainings = new ArrayList<ClassTraining>();
-        trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
+        trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).or(ClassTraining_Table.lastTraining.is(2)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
         //trainings = new Select().from(ClassTraining.class).orderBy(ClassTraining_Table.typeTrening, true).queryList();
         int nowLevel = 1;
         if(trainings.size()>0) {
             for (ClassTraining training : trainings) {
                 training.setMyAttempts();
-                if(training.getMyStrAttempts().length()>0 && training.getMyAttempts().size()>0) {
-                    if(!compareTrainingDates(training)) {
+                if(!compareTrainingDates(training)) {
+                    if (training.getMyStrAttempts().length() > 0 && training.getMyAttempts().size() > 0) {
+
                         nowLevel = training.getLvlTrening();
                         String strMyAtt = "";
                         if (training.checkAttempts()) {
@@ -53,6 +54,8 @@ public class App extends Application {
                         newTraining.setOldStrAttempts(strMyAtt);
                         newTraining.save();
                     }
+                    if(training.getLastTraining()==2)
+                        training.setLastTraining(0);
                 }
             }
         }

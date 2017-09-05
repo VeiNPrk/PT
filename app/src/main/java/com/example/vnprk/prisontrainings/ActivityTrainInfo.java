@@ -183,44 +183,32 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
     private void nextLevel(){
 		if(lvlTrening+1<11){
             lvlTrening++;
-            //tvName.startAnimation(AnimationUtils.loadAnimation(this,  R.anim.slide_out_left));
-            //setSlideAnimation(tvDescript,1);
-            //slideAnimation.SetTextView(tvName);
-            //tvName.startAnimation(slideAnimation.getSlideAnimation(1));
 			viewTraining(1);
-            //tvName.startAnimation(AnimationUtils.loadAnimation(this,  R.anim.slide_in_right));
 		}
     }
 
     private void prevLevel(){
 		if(lvlTrening-1>0) {
             lvlTrening--;
-            //tvName.startAnimation(AnimationUtils.loadAnimation(this,  R.anim.slide_out_right));
-            //setSlideAnimation(tvDescript,0);
-            //tvName.startAnimation(slideAnimation.getSlideAnimation(tv0));
             viewTraining(0);
-            //tvName.startAnimation(AnimationUtils.loadAnimation(this,  R.anim.slide_in_left));
         }
     }
 	
 	private void viewTraining(int k){
-		//try {
+
+        tvDescript.scrollTo(0,0);
             ivTrainIcon.startAnimation(animation.getSlideAnimation(ivTrainIcon,k,1,dataRes.getDrawableRes(getStringId(1))
                     /*ResourcesCompat.getDrawable(getResources(),
                     getResources().getIdentifier(getStringId(1), "drawable", getApplicationContext().getPackageName()), null)*/));
-            /*ivTrainIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
-                getResources().getIdentifier(getStringId(1), "drawable", getApplicationContext().getPackageName()), null));*/
-        /*}
-        catch(Exception ex){}*/
         tvName.startAnimation(animation1.getSlideAnimation(tvName,k,0,dataRes.getTextRes(getStringId(2))
                 /*getString(getResources().getIdentifier(getStringId(2),"string",getApplicationContext().getPackageName()))*/));
-        //tvName.setText();
         tvLevel.startAnimation(animation2.getSlideAnimation(tvLevel,k,0,"Уровень " + lvlTrening));
         tvDescript.startAnimation(animation3.getSlideAnimation(tvDescript,k,0,dataRes.getTextRes(getStringId(3))/*getString(getResources().getIdentifier(getStringId(3),"string",getApplicationContext().getPackageName()))*/));
     }
 
     private void viewTraining(){
         /*try {*/
+        tvDescript.scrollTo(0,0);
             ivTrainIcon.setImageDrawable(dataRes.getDrawableRes(getStringId(1))/*ResourcesCompat.getDrawable(getResources(),
                     getResources().getIdentifier(getStringId(1), "drawable", getApplicationContext().getPackageName()), null)*/);
         /*}
@@ -232,44 +220,13 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
 
     private void alphaViewTraining(){
         //try {
-            ivTrainIcon.startAnimation(animation.getAlphaAnimation(ivTrainIcon,1,dataRes.getDrawableRes(getStringId(1))/*ResourcesCompat.getDrawable(getResources(),
-                    getResources().getIdentifier(getStringId(1), "drawable", getApplicationContext().getPackageName()), null)*/));
-            /*ivTrainIcon.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
-                    getResources().getIdentifier(getStringId(1), "drawable", getApplicationContext().getPackageName()), null));*/
-        /*}
-        catch(Exception ex){}*/
-        tvName.startAnimation(animation1.getAlphaAnimation(tvName,0,dataRes.getTextRes(getStringId(2))
-                /*getString(getResources().getIdentifier(getStringId(2),"string",getApplicationContext().getPackageName()))*/));
-        tvLevel.startAnimation(animation2.getAlphaAnimation(tvLevel,0,"Уровень " + lvlTrening));
-        tvDescript.startAnimation(animation3.getAlphaAnimation(tvDescript,0,dataRes.getTextRes(getStringId(3))/*getString(getResources().getIdentifier(getStringId(3),"string",getApplicationContext().getPackageName()))*/));
+        tvDescript.scrollTo(0,0);
+            ivTrainIcon.startAnimation(animation.getAlphaAnimation(ivTrainIcon,1,dataRes.getDrawableRes(getStringId(1))));
 
-        //tvName.setText(getString(getResources().getIdentifier(getStringId(2),"string",getApplicationContext().getPackageName())));
-        //tvLevel.setText("Уровень " + lvlTrening);
-        //tvDescript.setText(getString(getResources().getIdentifier(getStringId(3),"string",getApplicationContext().getPackageName())));
+        tvName.startAnimation(animation1.getAlphaAnimation(tvName,0,dataRes.getTextRes(getStringId(2))));
+        tvLevel.startAnimation(animation2.getAlphaAnimation(tvLevel,0,"Уровень " + lvlTrening));
+        tvDescript.startAnimation(animation3.getAlphaAnimation(tvDescript,0,dataRes.getTextRes(getStringId(3))));
     }
-/*
-    private void setSlideAnimation(TextSwitcher switcher, int l_r){
-        if(l_r==0){
-            in = AnimationUtils.loadAnimation(this,  R.anim.slide_in_left);
-            out = AnimationUtils.loadAnimation(this, R.anim.slide_out_right);
-            switcher.setInAnimation(in);
-            switcher.setOutAnimation(out);
-        }
-        else{
-            in = AnimationUtils.loadAnimation(this,  R.anim.slide_in_right);
-            out = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
-            switcher.setInAnimation(in);
-            switcher.setOutAnimation(out);
-        }
-    }
-    public View makeView() {
-        TextView t = new TextView(this);
-        t.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL);
-        t.setTextSize(70);
-        t.setTextColor(Color.RED);
-        return t;
-    }
-*/
 
     public Animation getSlideAnimation(TextView _tv, int i, String _text){
         tv=_tv;

@@ -26,6 +26,7 @@ public class ClassTraining extends BaseModel implements Serializable {
     private Date dateTraining;
     @Column(defaultValue = "0")
     private int lastTraining;
+    // 0/1/2  можно делать/в ожидании даты/завершён
     @Column
 	private String myStrAttempts = "";
     @Column
@@ -93,10 +94,12 @@ public class ClassTraining extends BaseModel implements Serializable {
     }
 
 	public void setMyAttempts(){
-        if(myStrAttempts.length()>0)
+        if(myStrAttempts.length()>0) {
+            myAttempts.clear();
             for (String attempts : myStrAttempts.split("-")) {
                 myAttempts.add(Integer.parseInt(attempts));
             }
+        }
     }
 	
     public void addMyAttempts(int _count){

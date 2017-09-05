@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.util.Date;
+
 /**
  * Created by VNPrk on 27.04.2017.
  */
@@ -27,6 +29,8 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragment.MyDialogListener {
 	
 	public static final String SAVED_TRAINING_KEY="saved_tr_key";
+	public static final String CASH_STR_TRAINING_KEY="saved_cash_str_key";
+	public static final String CASH_DATE_TRAINING_KEY="saved_cash_date_key";
 	public static final String COUNT_TRAINING_KEY="saved_count_key";
 	
 	ClassTraining training;
@@ -44,6 +48,10 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 	MyDialogFragment dialog;
 	
 	int countAttempts = 1;
+	
+	String cashStrMyAttempts = "";
+	
+	Date cashDateTrening = null;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +89,10 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
     }
 	
 	private void initData(){
+		countAttempts=training.getMyAttempts().size();
+		countAttempts++;
+		cashStrMyAttempts = training.getMyStrAttempts();
+		cashDateTrening = training.getDateTraining();
 		imTraining.setImageDrawable(dataRes.getDrawableRes(training.getIdImage())/*ResourcesCompat.getDrawable(getResources(),
 				getResources().getIdentifier(training.getIdImage(),"drawable",getApplicationContext().getPackageName()),null)*/);
 		tvNameTraining.setText(dataRes.getTextRes(training.getIdName())/*getString(getResources().getIdentifier(training.getIdName(),"string",getApplicationContext().getPackageName()))*/);
@@ -116,6 +128,8 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putSerializable(SAVED_TRAINING_KEY, training);
+		outState.putSerializable(CASH_STR_TRAINING_KEY, cashStrMyAttempts);
+		outState.putSerializable(CASH_DATE_TRAINING_KEY, cashDateTrening);
 		outState.putInt(COUNT_TRAINING_KEY, numAttempt.getValue());
 	}
 
@@ -124,6 +138,8 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		training = (ClassTraining) savedInstanceState.getSerializable(SAVED_TRAINING_KEY);
 		tvMyAttempts.setText(training.getMyStrAttempts());
 		numAttempt.setValue(savedInstanceState.getInt(COUNT_TRAINING_KEY,0));
+		cashStrMyAttempts = savedInstanceState.getString(CASH_STR_TRAINING_KEY);
+		cashDateTrening = (Date) savedInstanceState.getSerializable(CASH_DATE_TRAINING_KEY);
 		checkLevelTraining();
 	}
 
@@ -179,6 +195,7 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		training.setLastDateTraining();
 		training.save();
 		ClassTraining newTraining = new ClassTraining(training.getTypeTrening(), nowLevel);
+		newTraining.setLastTraining(2);
 		newTraining.setLastDateTraining();
 		newTraining.setOldStrAttempts(strMyAtt);
 		newTraining.save();
@@ -208,6 +225,7 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		else
 			startActivity(intent);
 	}
+	
 	@Override
 	public void onBackPressed()
 	{
@@ -226,6 +244,9 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 	@Override
 	public void onNoClicked(DialogFragment dialog) {
 		Log.d("123", "Dialog onNoClicked");
+		training.setMyStrAttempts(cashStrMyAttempts);
+		training.setMyAttempts();
+		training.save();
 		setResult(RESULT_OK, null);
 		super.onBackPressed();
 	}

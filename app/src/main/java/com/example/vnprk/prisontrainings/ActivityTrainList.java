@@ -74,7 +74,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     }
 	
 	private void initData(){
-        trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
+        trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).or(ClassTraining_Table.lastTraining.is(2)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
 		//trainings = new Select().from(ClassTraining.class).orderBy(ClassTraining_Table.typeTrening, true).queryList();
 		if(trainings.size()==0){
 			initStartData();
@@ -89,9 +89,10 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     }
 
     private void refreshData(){
-		trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
+		trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).or(ClassTraining_Table.lastTraining.is(2)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
 		for (ClassTraining train : trainings) {
 			train.setNeedAttempts(dataRes.getTextRes(train.getIdAttempts())/*getString(getResources().getIdentifier(train.getIdAttempts(),"string",getApplicationContext().getPackageName()))*/);
+            train.setMyAttempts();
 		}
 		adapter.setData(trainings);
 	}
