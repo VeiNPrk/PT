@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by VNPrk on 27.04.2017.
  */
 //заменить на Train
-public class ActivityTrainList extends AppCompatActivity implements ActionMode.Callback {
+public class ActivityTrainList extends AppCompatActivity implements ActionMode.Callback, MyDialogTwoButtonFragment.TwoDialogListener {
 
     public final static int RESULT_CODE_TRAIN = 111;
 
@@ -46,8 +47,11 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     TrainingRecyclerAdapter adapter;
 	List<ClassTraining> trainings;
     ActionMode actionMode;
+    ClassTraining currentTraining;
+    View currentImage;
 	DataResCompound dataRes = null;
     View imTransitionView = null;
+    MyDialogTwoButtonFragment twoDialog;
 
 	public static void openActivity(Context context){
         Intent intent = new Intent(context, ActivityTrainList.class);
@@ -70,6 +74,13 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     private void initViews(){
 		//btnEndTraining = (Button)findViewById(R.id.btn_end_train);
         rvTrainings = (RecyclerView) findViewById(R.id.rv_trainings);
+        twoDialog = new MyDialogTwoButtonFragment();
+        Bundle args = new Bundle();
+        args.putString(MyDialogTwoButtonFragment.STR_DIALOG_TITTLE, "Повторить тренировку?");
+        args.putString(MyDialogTwoButtonFragment.STR_DIALOG_MESSAGE, "Вы уверены что хотите проделать одну тренировку дважды за день, может лучше отдохнуть?");
+        args.putString(MyDialogTwoButtonFragment.STR_DIALOG_YESBUT, "ПОВТОРИТЬ");
+        args.putString(MyDialogTwoButtonFragment.STR_DIALOG_NOBUT, "ОТДОХНУТЬ");
+        twoDialog.setArguments(args);
 
     }
 	
@@ -143,6 +154,10 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 		}
 		else
 		{
+            currentTraining=_training;
+            currentImage=trainImage;
+            twoDialog.show(getSupportFragmentManager(), "MyDialog");
+            /*
             Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_list),"Сегодня вы уже делали данное упражнение, попробуйте завтра", Snackbar.LENGTH_LONG)
                     .setAction("Action", null);
             View snackbarView = snackbar.getView();
@@ -150,6 +165,8 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
             snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
             snackbar.setDuration(4000); // 8 секунд
             snackbar.show();
+            */
+
 			//Toast.makeText(this, "Сегодня вы уже делали данное упражнение, попробуйте завтра", Toast.LENGTH_LONG).show();
 		}
 		//поставить else
@@ -264,5 +281,17 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
         }
         else
             startActivity(intent);
+    }
+
+    @Override
+    public void yesClicked(DialogFragment dialog) {
+        currentTraining.setLastTraining(0);
+        currentTraining.save();
+        goToTraining(currentTraining, currentImage);
+    }
+
+    @Override
+    public void noClicked(DialogFragment dialog) {
+
     }
 }

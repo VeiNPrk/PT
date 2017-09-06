@@ -26,7 +26,7 @@ import java.util.Date;
  * Created by VNPrk on 27.04.2017.
  */
 
-public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragment.MyDialogListener {
+public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragment.MyDialogListener, MyDialogTwoButtonFragment.TwoDialogListener {
 	
 	public static final String SAVED_TRAINING_KEY="saved_tr_key";
 	public static final String CASH_STR_TRAINING_KEY="saved_cash_str_key";
@@ -44,8 +44,10 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 	ImageView imCheck;
 	Button btnNextAttempt;
 	Button btnEndAttempts;
+	Button btnClearAttempts;
 	NumberPicker numAttempt;
 	MyDialogFragment dialog;
+	MyDialogTwoButtonFragment twoDialog;
 	
 	int countAttempts = 1;
 	
@@ -82,10 +84,18 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		tvNowAttempts = (TextView)findViewById(R.id.tv_now_attempts);
 		btnNextAttempt = (Button)findViewById(R.id.btn_next_attempt);
         btnEndAttempts = (Button)findViewById(R.id.btn_end_attempts);
+		btnClearAttempts = (Button)findViewById(R.id.btn_clear_result);
 		numAttempt = (NumberPicker)findViewById(R.id.np_num_attempts);
 		numAttempt.setMaxValue(100);
 		numAttempt.setMinValue(0);
 		dialog = new MyDialogFragment();
+		twoDialog = new MyDialogTwoButtonFragment();
+		Bundle args = new Bundle();
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_TITTLE, "Обнуление результата");
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_MESSAGE, "Вы уверены что хотите обнулить свой результат?");
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_YESBUT, "ОБНУЛИТЬ");
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_NOBUT, "ОСТАВИТЬ");
+		twoDialog.setArguments(args);
     }
 	
 	private void initData(){
@@ -116,6 +126,13 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
                 endTrening();
             }
         });
+		btnClearAttempts.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				twoDialog.show(getSupportFragmentManager(), "MyDialog");
+				//clearResult();
+			}
+		});
 		imTraining.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -206,6 +223,15 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
         else
             finish();
 	}
+
+	private void clearResult() {
+		training.clearAttempts();
+		training.save();
+		cashStrMyAttempts="";
+		tvMyAttempts.setText("");
+		countAttempts=1;
+		tvNowAttempts.setText("Текущий подход "+countAttempts);
+	}
 	
 	private void checkLevelTraining(){
 		if(training.checkAttempts())
@@ -249,5 +275,15 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		training.save();
 		setResult(RESULT_OK, null);
 		super.onBackPressed();
+	}
+
+	@Override
+	public void yesClicked(DialogFragment dialog) {
+		clearResult();
+	}
+
+	@Override
+	public void noClicked(DialogFragment dialog) {
+
 	}
 }

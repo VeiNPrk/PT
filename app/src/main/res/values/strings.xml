@@ -3,7 +3,18 @@
     <string name="activity_image_trans">icon_train_transition</string>
     <string name="activity_name_trans">name_train_transition</string>
     <string name="activity_level_trans">level_train_transition</string>
-
+    <string name="dialog_clear_tittle"></string>
+    <string name="dialog_clear_message"></string>
+    <string name="dialog_clear_yes"></string>
+    <string name="dialog_clear_no"></string>
+    <string name="dialog_repeat_tittle"></string>
+    <string name="dialog_repeat_message"></string>
+    <string name="dialog_repeat_yes"></string>
+    <string name="dialog_repeat_no"></string>
+    <string name="dialog_save_tittle"></string>
+    <string name="dialog_save_message"></string>
+    <string name="dialog_save_yes"></string>
+    <string name="dialog_save_no"></string>
     <string-array name="trainings">
         <item>Отжимания</item>
         <item>Приседания</item>

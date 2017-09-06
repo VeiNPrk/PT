@@ -200,7 +200,7 @@ public class ClassTraining extends BaseModel implements Serializable {
         return tf;
     }
 
-    private void clearAttempts(){
+    public void clearAttempts(){
         myStrAttempts = "";
         myAttempts.clear();
     }
