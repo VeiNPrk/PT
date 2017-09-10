@@ -202,7 +202,7 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
                     getResources().getIdentifier(getStringId(1), "drawable", getApplicationContext().getPackageName()), null)*/));
         tvName.startAnimation(animation1.getSlideAnimation(tvName,k,0,dataRes.getTextRes(getStringId(2))
                 /*getString(getResources().getIdentifier(getStringId(2),"string",getApplicationContext().getPackageName()))*/));
-        tvLevel.startAnimation(animation2.getSlideAnimation(tvLevel,k,0,"Уровень " + lvlTrening));
+        tvLevel.startAnimation(animation2.getSlideAnimation(tvLevel,k,0,getString(R.string.text_level)+" " + lvlTrening));
         tvDescript.startAnimation(animation3.getSlideAnimation(tvDescript,k,0,dataRes.getTextRes(getStringId(3))/*getString(getResources().getIdentifier(getStringId(3),"string",getApplicationContext().getPackageName()))*/));
     }
 
@@ -214,7 +214,7 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
         /*}
         catch(Exception ex){}*/
         tvName.setText(dataRes.getTextRes(getStringId(2))/*getString(getResources().getIdentifier(getStringId(2),"string",getApplicationContext().getPackageName()))*/);
-        tvLevel.setText("Уровень " + lvlTrening);
+        tvLevel.setText(getString(R.string.text_level)+" " + lvlTrening);
         tvDescript.setText(dataRes.getTextRes(getStringId(3))/*getString(getResources().getIdentifier(getStringId(3),"string",getApplicationContext().getPackageName()))*/);
     }
 
@@ -224,7 +224,7 @@ public class ActivityTrainInfo extends AppCompatActivity /*implements ViewSwitch
             ivTrainIcon.startAnimation(animation.getAlphaAnimation(ivTrainIcon,1,dataRes.getDrawableRes(getStringId(1))));
 
         tvName.startAnimation(animation1.getAlphaAnimation(tvName,0,dataRes.getTextRes(getStringId(2))));
-        tvLevel.startAnimation(animation2.getAlphaAnimation(tvLevel,0,"Уровень " + lvlTrening));
+        tvLevel.startAnimation(animation2.getAlphaAnimation(tvLevel,0,getString(R.string.text_level)+" " + lvlTrening));
         tvDescript.startAnimation(animation3.getAlphaAnimation(tvDescript,0,dataRes.getTextRes(getStringId(3))));
     }
 

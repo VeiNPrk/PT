@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -64,6 +65,7 @@ public class ActivityStatistics extends AppCompatActivity implements
         setContentView(R.layout.activity_statistics);
         dataRes = DataResCompound.getInstance();
         chartsData = new ClassCharts();
+        chartsData.setColorLine(ContextCompat.getColor(this,R.color.colorAccent));
         typeTrening = getIntent().getIntExtra(TYPE_TREN_KEY,1);
         initViews();
         initData();

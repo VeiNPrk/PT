@@ -4,8 +4,10 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -91,10 +93,10 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		dialog = new MyDialogFragment();
 		twoDialog = new MyDialogTwoButtonFragment();
 		Bundle args = new Bundle();
-		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_TITTLE, "Обнуление результата");
-		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_MESSAGE, "Вы уверены что хотите обнулить свой результат?");
-		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_YESBUT, "ОБНУЛИТЬ");
-		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_NOBUT, "ОСТАВИТЬ");
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_TITTLE, getString(R.string.dialog_clear_tittle));
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_MESSAGE, getString(R.string.dialog_clear_message));
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_YESBUT, getString(R.string.dialog_clear_yes));
+		args.putString(MyDialogTwoButtonFragment.STR_DIALOG_NOBUT, getString(R.string.dialog_clear_no));
 		twoDialog.setArguments(args);
     }
 	
@@ -106,10 +108,10 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		imTraining.setImageDrawable(dataRes.getDrawableRes(training.getIdImage())/*ResourcesCompat.getDrawable(getResources(),
 				getResources().getIdentifier(training.getIdImage(),"drawable",getApplicationContext().getPackageName()),null)*/);
 		tvNameTraining.setText(dataRes.getTextRes(training.getIdName())/*getString(getResources().getIdentifier(training.getIdName(),"string",getApplicationContext().getPackageName()))*/);
-		tvLevelTraining.setText("Уровень "+training.getLvlTrening());
+		tvLevelTraining.setText(getString(R.string.text_level)+" "+training.getLvlTrening());
 		tvNeedAtempts.setText(training.getStrNeedAttempts());
 		tvMyAttempts.setText(training.getMyStrAttempts());
-		tvNowAttempts.setText("Текущий подход "+countAttempts);
+		tvNowAttempts.setText(getString(R.string.text_now_attempt)+" "+countAttempts);
 
 	}
 	
@@ -182,16 +184,30 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 				checkLevelTraining();
 				numAttempt.setValue(0);
 				countAttempts++;
-				tvNowAttempts.setText("Текущий подход "+countAttempts);
+				tvNowAttempts.setText(getString(R.string.text_now_attempt)+" "+countAttempts);
 			    training.save();
 			}
 			else{
-				Toast.makeText(this,"Слишком много подходов",Toast.LENGTH_LONG).show();
+				Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_train_now),getString(R.string.snack_more_attempt), Snackbar.LENGTH_LONG)
+						.setAction("Action", null);
+				View snackbarView = snackbar.getView();
+				TextView snackTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+				snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
+				snackbar.setDuration(3000); // 8 секунд
+				snackbar.show();
+				///Toast.makeText(this,getString(R.string.snack_more_attempt),Toast.LENGTH_LONG).show();
 			}
 		}
 		else{
 			//может заменить на диалог
-			Toast.makeText(this,"Вы не сделали ни одного повтореня в текущем подходе",Toast.LENGTH_LONG).show();
+			Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_train_now),getString(R.string.snack_null_attempt), Snackbar.LENGTH_LONG)
+					.setAction("Action", null);
+			View snackbarView = snackbar.getView();
+			TextView snackTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+			snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
+			snackbar.setDuration(3000); // 8 секунд
+			snackbar.show();
+			//Toast.makeText(this,getString(R.string.snack_null_attempt),Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -230,7 +246,7 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		cashStrMyAttempts="";
 		tvMyAttempts.setText("");
 		countAttempts=1;
-		tvNowAttempts.setText("Текущий подход "+countAttempts);
+		tvNowAttempts.setText(getString(R.string.text_now_attempt) +" "+countAttempts);
         checkLevelTraining();
 	}
 	

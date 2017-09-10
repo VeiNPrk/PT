@@ -22,6 +22,7 @@ public class ClassCharts {
 	List<ClassTraining> trainings = null;
 	List<Entry> entries = null;
 	LineData chartData = null;
+	int colorLine = 0;
 	
     public ClassCharts() {
 		trainings = new ArrayList<ClassTraining>();
@@ -32,6 +33,10 @@ public class ClassCharts {
 		trainings.clear();
 		trainings = _trainings;
 		initChart();
+	}
+
+	public void setColorLine(int color){
+		colorLine=color;
 	}
 	
 	private void initChart(){
@@ -50,10 +55,10 @@ public class ClassCharts {
         entries.add(new Entry(3,16));
         entries.add(new Entry(4,15));
         entries.add(new Entry(5,30));*/
-		LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+		LineDataSet dataSet = new LineDataSet(entries, "Уровень"); // add entries to dataset
 		dataSet.setMode(LineDataSet.Mode.STEPPED);
         dataSet.setLineWidth(3f);
-
+		dataSet.setColor(colorLine);
 		//dataSet.setColor();
 		//dataSet.setValueTextColor(...);
 		chartData = new LineData(dataSet);

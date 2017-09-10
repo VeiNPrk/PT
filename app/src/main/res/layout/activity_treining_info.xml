@@ -82,14 +82,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Тип упражнения:"
+        android:layout_marginBottom="0dp"
+        android:text="@string/text_type_train"
         android:textAlignment="center"
         android:textSize="@dimen/big_text_size"
-        android:transitionName="@string/activity_name_trans"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:text="Тип упражнения:"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/spn_train" />
+        app:layout_constraintBottom_toTopOf="@+id/spn_train"
+        tools:text="Тип упражнения:"/>
 
     <TextView
         android:id="@+id/tv_tr_descr"

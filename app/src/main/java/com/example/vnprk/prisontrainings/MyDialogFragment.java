@@ -37,19 +37,19 @@ public class MyDialogFragment extends DialogFragment {
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity())
-                .setTitle("Title!")
-                .setPositiveButton("ДА", new DialogInterface.OnClickListener() {
+                .setTitle(getString(R.string.dialog_save_tittle))
+                .setPositiveButton(getString(R.string.dialog_save_yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onYesClicked(MyDialogFragment.this);
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.dialog_save_no), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onNoClicked(MyDialogFragment.this);
                     }
                 })
-			   .setNeutralButton("Отмена", null)
-                .setMessage("Сохранить результат");
+			   .setNeutralButton(getString(R.string.dialog_save_neutral), null)
+                .setMessage(getString(R.string.dialog_save_message));
         return adb.create();
     }
 

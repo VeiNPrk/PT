@@ -48,9 +48,13 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 	List<ClassTraining> trainings;
     ActionMode actionMode;
     ClassTraining currentTraining;
-    View currentImage;
+    View vCurrentImage;
+    View vCurrentName;
+    View vCurrentLevel;
 	DataResCompound dataRes = null;
     View imTransitionView = null;
+    View tvTransitionName = null;
+    View tvTransitionLevel = null;
     MyDialogTwoButtonFragment twoDialog;
 
 	public static void openActivity(Context context){
@@ -126,36 +130,38 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 	
 	private TrainingRecyclerAdapter.TrainingClickListener rvClickListener = new TrainingRecyclerAdapter.TrainingClickListener() {
 		@Override
-		public void onTrainingClick(View trainImage, int position){
+		public void onTrainingClick(View trainImage, View trainName, View trainLevel, int position){
             if (actionMode != null) {
-                myToggleSelection(position,trainImage);
+                myToggleSelection(position,trainImage, trainName, trainLevel);
                 return;
             }
-			goToTraining(trainings.get(position), trainImage);
+			goToTraining(trainings.get(position), trainImage, trainName, trainLevel);
             /*elementView(notes.get(idx),noteImage);*/
 		}
 		
 		@Override
-		public void onTrainingLongClick(View trainImage, int position){
+		public void onTrainingLongClick(View trainImage, View trainName, View trainLevel, int position){
             if (actionMode != null) {
                 return;
             }
             actionMode = startActionMode(ActivityTrainList.this);
-            myToggleSelection(position,trainImage);
+            myToggleSelection(position,trainImage, trainName, trainLevel);
 		}
 	};
 	
-	private void goToTraining(ClassTraining _training, View trainImage){
+	private void goToTraining(ClassTraining _training, View trainImage, View trainName, View trainLevel){
 		Date nowDate = new Date();
 		if(!compareTrainingDates(_training) || _training.getLastTraining()==0){
 			Intent intent = new Intent(ActivityTrainList.this, ActivityTrainNow.class);
 			intent.putExtra(ClassTraining.KEY_TRAINING, _training);
-			startActivityTransition(intent, RESULT_CODE_TRAIN, trainImage);
+			startActivityTransition(intent, RESULT_CODE_TRAIN, trainImage, trainName, trainLevel);
 		}
 		else
 		{
             currentTraining=_training;
-            currentImage=trainImage;
+            vCurrentImage=trainImage;
+            vCurrentName=trainName;
+            vCurrentLevel=trainLevel;
             twoDialog.show(getSupportFragmentManager(), "MyDialog");
             /*
             Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_list),"Сегодня вы уже делали данное упражнение, попробуйте завтра", Snackbar.LENGTH_LONG)
@@ -172,9 +178,12 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 		//поставить else
     }
 
-    private void startActivityTransition(Intent intent, int requestCode, View trainImage){
+    private void startActivityTransition(Intent intent, int requestCode, View trainImage, View trainName, View trainLevel){
         ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(this, trainImage, getString(R.string.activity_image_trans));
+                makeSceneTransitionAnimation(this,
+                        Pair.create(trainImage, getString(R.string.activity_image_trans)),
+                        Pair.create(trainName, getString(R.string.activity_name_trans)),
+                        Pair.create(trainLevel, getString(R.string.activity_level_trans)));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             startActivityForResult(intent, requestCode, options.toBundle());
         }
@@ -259,9 +268,11 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
         //fab.setVisibility(View.VISIBLE);
     }
 
-    private void myToggleSelection(int idx, View imageView) {
+    private void myToggleSelection(int idx, View trainImage, View trainName, View trainLevel) {
         adapter.toggleSelection(idx);
-        imTransitionView = imageView;
+        imTransitionView = trainImage;
+        tvTransitionName = trainName;
+        tvTransitionLevel = trainLevel;
     }
 
     private void goToStat(int idx){
@@ -274,7 +285,9 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
         intent.putExtra(ClassTraining.KEY_TR_LVL, trainings.get(idx).getLvlTrening());
         ActivityOptionsCompat options = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this,
-                        Pair.create((View)imTransitionView, getString(R.string.activity_image_trans)));
+                        Pair.create(imTransitionView, getString(R.string.activity_image_trans)),
+                        Pair.create(tvTransitionName, getString(R.string.activity_name_trans)),
+                        Pair.create(tvTransitionLevel, getString(R.string.activity_level_trans)));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             startActivity(intent, options.toBundle());
@@ -287,7 +300,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     public void yesClicked(DialogFragment dialog) {
         currentTraining.setLastTraining(0);
         currentTraining.save();
-        goToTraining(currentTraining, currentImage);
+        goToTraining(currentTraining, vCurrentImage, vCurrentName, vCurrentLevel);
     }
 
     @Override

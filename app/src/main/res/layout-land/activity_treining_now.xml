@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_train_now"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,12 +27,12 @@
         android:text="TextView"
         android:textSize="@dimen/big_text_size"
         android:transitionName="@string/activity_name_trans"
-        app:layout_constraintTop_toTopOf="@+id/im_training"
-        tools:text="t1"
-        app:layout_constraintLeft_toRightOf="@+id/im_training"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/im_training"
+        app:layout_constraintLeft_toRightOf="@+id/im_training"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="t1"/>
 
     <TextView
         android:id="@+id/tv_tr_level"
@@ -44,12 +45,12 @@
         android:text="TextView"
         android:textSize="@dimen/big_text_size"
         android:transitionName="@string/activity_level_trans"
+        android:layout_marginLeft="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_tr_name"
-        tools:text="t2"
         app:layout_constraintLeft_toRightOf="@+id/im_training"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        tools:text="t2"/>
 
     <ImageView
         android:id="@+id/im_check_training"
@@ -74,19 +75,19 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="3"
         android:gravity="center_vertical"
-        android:text="Нужно выполнить"
+        android:text="@string/text_need_attempt"
         android:textSize="@dimen/midle_text_size"
         app:layout_constraintRight_toLeftOf="@+id/guideline4"
-        tools:text="Нужно выполнить"
-        android:layout_marginTop="2dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_tr_level"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintVertical_bias="0.533"
-        app:layout_constraintLeft_toRightOf="@+id/im_training" />
+        app:layout_constraintLeft_toRightOf="@+id/im_training"
+        tools:text="Нужно выполнить"/>
 
     <TextView
         android:id="@+id/tv_need_attempts"
@@ -94,45 +95,28 @@
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:layout_marginLeft="-138dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="-4dp"
         android:layout_weight="2"
         android:gravity="center_vertical"
-        android:text="TextView"
         android:textSize="@dimen/big_text_size"
         app:layout_constraintLeft_toLeftOf="@+id/guideline4"
-        tools:text="10-10-10-10"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        android:layout_marginBottom="-4dp"
         app:layout_constraintTop_toTopOf="@+id/textView4"
-        android:layout_marginTop="0dp" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:weightSum="5"
-        app:layout_constraintTop_toBottomOf="@+id/tv_tr_level"
-        app:layout_constraintLeft_toRightOf="@+id/im_training"
-        android:layout_marginLeft="8dp">
-
-    </LinearLayout>
+        tools:text="10-10-10-10"/>
 
     <TextView
         android:id="@+id/tv_now_attempts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Текущий подход"
-        android:textSize="@dimen/big_text_size"
-        tools:text="Текущий подход"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/im_training"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/im_training" />
+        android:text="@string/text_now_attempt"
+        android:textSize="@dimen/big_text_size"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/im_training"
+        app:layout_constraintTop_toBottomOf="@+id/im_training"
+        tools:text="@string/text_now_attempt"/>
 
     <NumberPicker
         android:id="@+id/np_num_attempts"
@@ -144,34 +128,38 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/im_training"
-        app:layout_constraintRight_toLeftOf="@+id/linearLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/im_training" />
+        app:layout_constraintTop_toBottomOf="@+id/im_training"
+        app:layout_constraintRight_toRightOf="@+id/im_training" />
 
     <Button
         android:id="@+id/btn_next_attempt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:text="Следующий подход"
-        tools:text="Следующий подход"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/btn_train_next_attempt"
         android:textColor="@color/colorIcons"
-        app:layout_constraintRight_toLeftOf="@+id/btn_end_attempts"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_end_attempts"
+        app:layout_constraintLeft_toLeftOf="@+id/btn_end_attempts"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="Следующий подход"
+        app:layout_constraintHorizontal_bias="0.888" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:id="@+id/btn_end_attempts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:textColor="@color/colorIcons"
-        android:text="Закончить упражнение"
+        android:text="@string/btn_train_end_attempt"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:text="Закончить упражнение"
-        android:layout_marginEnd="16dp" />
+        />
 
     <TextView
         android:id="@+id/tv_my_attempts"
@@ -182,11 +170,10 @@
         android:layout_weight="2"
         android:textSize="@dimen/big_text_size"
         app:layout_constraintLeft_toLeftOf="@+id/guideline4"
-        tools:text="10-10"
         app:layout_constraintTop_toTopOf="@+id/textView5"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
-
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.666"
+        tools:text="10-10"/>
 
     <TextView
         android:id="@+id/textView5"
@@ -197,30 +184,14 @@
         android:layout_marginTop="8dp"
         android:layout_weight="3"
         android:gravity="center_vertical"
-        android:text="Вы сделали"
+        android:text="@string/text_my_attempt"
         android:textSize="@dimen/midle_text_size"
         app:layout_constraintLeft_toRightOf="@+id/im_training"
         app:layout_constraintRight_toLeftOf="@+id/guideline4"
-        tools:text="Вы сделали"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toTopOf="@+id/guideline5"
+        tools:text="Вы сделали"
          />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:weightSum="5"
-        app:layout_constraintLeft_toRightOf="@+id/im_training"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-    </LinearLayout>
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -240,13 +211,11 @@
         android:id="@+id/btn_clear_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Сбросить результат"
+        android:text="@string/btn_train_clear_result"
         android:textColor="@color/colorIcons"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_end_attempts"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/btn_end_attempts" />
+        app:layout_constraintRight_toLeftOf="@+id/btn_end_attempts"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp" />
 
 </android.support.constraint.ConstraintLayout>

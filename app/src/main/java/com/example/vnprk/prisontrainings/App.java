@@ -36,7 +36,7 @@ public class App extends Application {
         if(trainings.size()>0) {
             for (ClassTraining training : trainings) {
                 training.setMyAttempts();
-                //if(!compareTrainingDates(training)) {
+                if(!compareTrainingDates(training)) {
                     if (training.getMyStrAttempts().length() > 0 && training.getMyAttempts().size() > 0) {
 
                         nowLevel = training.getLvlTrening();
@@ -58,7 +58,7 @@ public class App extends Application {
                         training.setLastTraining(0);
                         training.save();
                     }
-                //}
+                }
             }
         }
     }

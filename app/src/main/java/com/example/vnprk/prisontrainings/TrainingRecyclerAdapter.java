@@ -86,19 +86,21 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rv_item, parent, false);
         final ImageView ivTrainIcon = (ImageView)view.findViewById(R.id.iv_icon_train);
+        final TextView tvTrainName = (TextView)view.findViewById(R.id.tv_tr_name);
+        final TextView tvTrainLevel = (TextView)view.findViewById(R.id.tv_tr_level);
         final TrainingViewHolder viewHolder = new TrainingViewHolder(view);
         view.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 int position = viewHolder.getAdapterPosition();
-                trainingClickListener.onTrainingClick(ivTrainIcon, position);
+                trainingClickListener.onTrainingClick(ivTrainIcon, tvTrainName, tvTrainLevel, position);
             }
         });
         view.setOnLongClickListener(new View.OnLongClickListener(){
             @Override
             public boolean onLongClick(View v){
                 int position = viewHolder.getAdapterPosition();
-                trainingClickListener.onTrainingLongClick(ivTrainIcon, position);
+                trainingClickListener.onTrainingLongClick(ivTrainIcon, tvTrainName, tvTrainLevel, position);
                 return false;
             }
         });
@@ -109,7 +111,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
     public void onBindViewHolder(TrainingViewHolder holder, int i) {
         holder.tvTrainName.setText(dataRes.getTextRes(data.get(i).getIdName()) /*context.getString(
                 context.getResources().getIdentifier(data.get(i).getIdName(),"string",context.getApplicationContext().getPackageName()))*/);
-        holder.tvTrainLevel.setText(Integer.toString(data.get(i).getLvlTrening()));
+        holder.tvTrainLevel.setText(context.getString(R.string.text_level)+" "+Integer.toString(data.get(i).getLvlTrening()));
         holder.tvTrainNeed.setText(data.get(i).getStrNeedAttempts());
         holder.tvTrainMy.setText(data.get(i).getOldStrAttempts());
         holder.ivTrainIcon.setImageDrawable(dataRes.getDrawableRes(data.get(i).getIdImage())/*ContextCompat.getDrawable(context, context.getResources().getIdentifier(data.get(i).getIdImage(),"drawable",context.getApplicationContext().getPackageName()))*/);
@@ -123,8 +125,8 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
 
 
     public interface TrainingClickListener {
-        void onTrainingClick(View trainImage, int position);
-        void onTrainingLongClick(View trainImage, int position);
+        void onTrainingClick(View trainImage, View trainName, View trainLevel, int position);
+        void onTrainingLongClick(View trainImage, View trainName, View trainLevel, int position);
     }
 }
 
