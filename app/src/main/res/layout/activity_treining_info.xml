@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/cl_info"
+    android:layout_height="match_parent">
+
+    <Spinner
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:id="@+id/spn_train"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="#CFD8DC"
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:overlapAnchor="false"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/iv_icon_train"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+
+        android:transitionName="@string/activity_image_trans"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_alert" />
+
+    <TextView
+        android:id="@+id/tv_tr_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="@dimen/bbig_text_size"
+        android:textAlignment="center"
+        android:transitionName="@string/activity_name_trans"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_icon_train"
+        tools:text="упражнение" />
+
+    <TextView
+        android:id="@+id/tv_tr_level"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="@dimen/big_text_size"
+        android:textAlignment="center"
+        android:transitionName="@string/activity_level_trans"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tr_name"
+        tools:text="текущий уровень" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Тип упражнения:"
+        android:textAlignment="center"
+        android:textSize="@dimen/big_text_size"
+        android:transitionName="@string/activity_name_trans"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="Тип упражнения:"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/spn_train" />
+
+    <TextView
+        android:id="@+id/tv_tr_descr"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/descr_padding"
+        android:layout_marginLeft="@dimen/descr_padding"
+        android:layout_marginRight="@dimen/descr_padding"
+        android:layout_marginStart="@dimen/descr_padding"
+        android:layout_marginTop="8dp"
+        android:maxLines="6"
+        android:textAlignment="center"
+        android:textSize="@dimen/midle_text_size"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tr_level"
+        tools:text="описание dggjigjrejgi wejgerjgpij epgjerpgjp ejrgoprjpoj jreojgorgjj ofjvrogjo jfo  o ro" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Статистика"
+        android:id="@+id/menu_stat"
+        android:icon="@mipmap/ic_chart_line"
+        app:showAsAction="always"/>
+    <item
+        android:title="Информациия"
+        android:id="@+id/menu_info"
+        android:icon="@android:drawable/ic_menu_info_details"/>
+</menu>
