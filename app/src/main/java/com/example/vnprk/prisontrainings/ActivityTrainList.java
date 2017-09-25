@@ -2,13 +2,10 @@ package com.example.vnprk.prisontrainings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,12 +17,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -51,6 +42,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     View vCurrentImage;
     View vCurrentName;
     View vCurrentLevel;
+    View vCurrentNeed;
 	DataResCompound dataRes = null;
     View imTransitionView = null;
     View tvTransitionName = null;
@@ -59,8 +51,6 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 
 	public static void openActivity(Context context){
         Intent intent = new Intent(context, ActivityTrainList.class);
-        /*if (!(context instanceof Activity))
-            intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);*/
         context.startActivity(intent);
     }
 	
@@ -90,7 +80,6 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 	
 	private void initData(){
         trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).or(ClassTraining_Table.lastTraining.is(2)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
-		//trainings = new Select().from(ClassTraining.class).orderBy(ClassTraining_Table.typeTrening, true).queryList();
 		if(trainings.size()==0){
 			initStartData();
 			trainings = new Select().from(ClassTraining.class).where(ClassTraining_Table.lastTraining.is(0)).orderBy(ClassTraining_Table.typeTrening, true).queryList();
@@ -98,7 +87,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 
 		for (ClassTraining train : trainings) {
 
-            train.setNeedAttempts(dataRes.getTextRes(train.getIdAttempts())/*getString(getResources().getIdentifier(train.getIdAttempts(),"string",getApplicationContext().getPackageName()))*/);
+            train.setNeedAttempts(dataRes.getTextRes(train.getIdAttempts()));
             train.setMyAttempts();
 		}
     }
@@ -123,20 +112,16 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rvTrainings.addItemDecoration(itemDecoration);
         rvTrainings.setItemAnimator(new DefaultItemAnimator());
-        /*LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.s);
-        rvTrainings.setLayoutAnimation(animation);*/
-        //rvTrainings.addOnItemTouchListener(this);
     }
 	
 	private TrainingRecyclerAdapter.TrainingClickListener rvClickListener = new TrainingRecyclerAdapter.TrainingClickListener() {
 		@Override
-		public void onTrainingClick(View trainImage, View trainName, View trainLevel, int position){
+		public void onTrainingClick(View trainImage, View trainName, View trainLevel, View trainNeed, int position){
             if (actionMode != null) {
                 myToggleSelection(position,trainImage, trainName, trainLevel);
                 return;
             }
-			goToTraining(trainings.get(position), trainImage, trainName, trainLevel);
-            /*elementView(notes.get(idx),noteImage);*/
+			goToTraining(trainings.get(position), trainImage, trainName, trainLevel, trainNeed);
 		}
 		
 		@Override
@@ -149,41 +134,29 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 		}
 	};
 	
-	private void goToTraining(ClassTraining _training, View trainImage, View trainName, View trainLevel){
-		Date nowDate = new Date();
+	private void goToTraining(ClassTraining _training, View trainImage, View trainName, View trainLevel, View trainNeed){
 		if(!compareTrainingDates(_training) || _training.getLastTraining()==0){
 			Intent intent = new Intent(ActivityTrainList.this, ActivityTrainNow.class);
 			intent.putExtra(ClassTraining.KEY_TRAINING, _training);
-			startActivityTransition(intent, RESULT_CODE_TRAIN, trainImage, trainName, trainLevel);
+			startActivityTransition(intent, RESULT_CODE_TRAIN, trainImage, trainName, trainLevel, trainNeed);
 		}
-		else
-		{
+		else {
             currentTraining=_training;
             vCurrentImage=trainImage;
             vCurrentName=trainName;
             vCurrentLevel=trainLevel;
+            vCurrentNeed = trainNeed;
             twoDialog.show(getSupportFragmentManager(), "MyDialog");
-            /*
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_list),"Сегодня вы уже делали данное упражнение, попробуйте завтра", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null);
-            View snackbarView = snackbar.getView();
-            TextView snackTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
-            snackbar.setDuration(4000); // 8 секунд
-            snackbar.show();
-            */
-
-			//Toast.makeText(this, "Сегодня вы уже делали данное упражнение, попробуйте завтра", Toast.LENGTH_LONG).show();
 		}
-		//поставить else
     }
 
-    private void startActivityTransition(Intent intent, int requestCode, View trainImage, View trainName, View trainLevel){
+    private void startActivityTransition(Intent intent, int requestCode, View trainImage, View trainName, View trainLevel, View trainNeed){
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(this,
                         Pair.create(trainImage, getString(R.string.activity_image_trans)),
                         Pair.create(trainName, getString(R.string.activity_name_trans)),
-                        Pair.create(trainLevel, getString(R.string.activity_level_trans)));
+                        Pair.create(trainLevel, getString(R.string.activity_level_trans)),
+                        Pair.create(trainNeed, getString(R.string.activity_needat_trans)));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             startActivityForResult(intent, requestCode, options.toBundle());
         }
@@ -222,7 +195,7 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode==RESULT_CODE_TRAIN && resultCode==RESULT_OK)
+		if(requestCode==RESULT_CODE_TRAIN /*&& resultCode==RESULT_OK*/)
 			refreshData();
 		//super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -231,9 +204,6 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         MenuInflater inflater = mode.getMenuInflater();
         inflater.inflate(R.menu.context_menu, menu);
-        /*editItem = menu.findItem(R.id.menu_edit);
-        deleteItem = menu.findItem(R.id.menu_delete);
-        fab.setVisibility(View.GONE);*/
         return true;
     }
 
@@ -247,12 +217,10 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
         switch (menuItem.getItemId()) {
             case R.id.menu_stat:
                 goToStat(adapter.getSelection());
-                //editElementView(notes.get(selectedPositions.get(0)));
                 actionMode.finish();
                 return true;
             case R.id.menu_info:
                 goToInfo(adapter.getSelection());
-                //deleteElement(selectedPositions);
                 actionMode.finish();
                 return true;
             default:
@@ -265,7 +233,6 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
     public void onDestroyActionMode(ActionMode actionMode) {
         this.actionMode = null;
         adapter.clearSelections();
-        //fab.setVisibility(View.VISIBLE);
     }
 
     private void myToggleSelection(int idx, View trainImage, View trainName, View trainLevel) {
@@ -283,24 +250,14 @@ public class ActivityTrainList extends AppCompatActivity implements ActionMode.C
         Intent intent = new Intent(ActivityTrainList.this, ActivityTrainInfo.class);
         intent.putExtra(ClassTraining.KEY_TR_TYPE, trainings.get(idx).getTypeTrening());
         intent.putExtra(ClassTraining.KEY_TR_LVL, trainings.get(idx).getLvlTrening());
-        ActivityOptionsCompat options = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this,
-                        Pair.create(imTransitionView, getString(R.string.activity_image_trans)),
-                        Pair.create(tvTransitionName, getString(R.string.activity_name_trans)),
-                        Pair.create(tvTransitionLevel, getString(R.string.activity_level_trans)));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            startActivity(intent, options.toBundle());
-        }
-        else
-            startActivity(intent);
+        startActivity(intent);
     }
 
     @Override
     public void yesClicked(DialogFragment dialog) {
         currentTraining.setLastTraining(0);
         currentTraining.save();
-        goToTraining(currentTraining, vCurrentImage, vCurrentName, vCurrentLevel);
+        goToTraining(currentTraining, vCurrentImage, vCurrentName, vCurrentLevel, vCurrentNeed);
     }
 
     @Override

@@ -49,15 +49,11 @@ public class ClassCharts {
 		}
 		else
 			entries.add(new Entry(1,0));
-		/*
-        entries.add(new Entry(1,10));
-        entries.add(new Entry(2,23));
-        entries.add(new Entry(3,16));
-        entries.add(new Entry(4,15));
-        entries.add(new Entry(5,30));*/
+
 		LineDataSet dataSet = new LineDataSet(entries, "Уровень"); // add entries to dataset
 		dataSet.setMode(LineDataSet.Mode.STEPPED);
         dataSet.setLineWidth(3f);
+		dataSet.setDrawValues(true);
 		dataSet.setColor(colorLine);
 		//dataSet.setColor();
 		//dataSet.setValueTextColor(...);

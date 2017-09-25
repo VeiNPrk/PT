@@ -3,6 +3,7 @@
     <string name="activity_image_trans">icon_train_transition</string>
     <string name="activity_name_trans">name_train_transition</string>
     <string name="activity_level_trans">level_train_transition</string>
+    <string name="activity_needat_trans">level_train_transition</string>
 
     <string name="btn_start_text">Начать тренировку</string>
     <string name="btn_stat_text">Статистика</string>
@@ -17,8 +18,9 @@
     <string name="text_level">Уровень</string>
     <string name="text_type_train">Тип упражнения:</string>
 
-    <string name="snack_more_attempt">Слишком много подходов</string>
-    <string name="snack_null_attempt">Вы не сделали ни одного повтореня в текущем подходе</string>
+    <string name="snack_more_attempt">Слишком много подходов, не перетрудитесь.</string>
+    <string name="snack_null_attempt">Вы не сделали ни одного повторения в текущем подходе</string>
+    <string name="snack_next_level">Поздравляем! На следующей тренировке вы перейдёте на новый уровень!</string>
 
     <string name="dialog_clear_tittle">Обнуление результата</string>
     <string name="dialog_clear_message">Вы уверены что хотите обнулить свой результат?</string>

@@ -24,8 +24,9 @@ public class App extends Application {
                         .openDatabasesOnInit(true)
                         .build()
         );
-        CheckTreining();
+
         DataResCompound.initInstance(this);
+        CheckTreining();
     }
 
     private void CheckTreining(){
@@ -36,6 +37,7 @@ public class App extends Application {
         if(trainings.size()>0) {
             for (ClassTraining training : trainings) {
                 training.setMyAttempts();
+                training.setNeedAttempts(DataResCompound.getInstance().getTextRes(training.getIdAttempts()));
                 if(!compareTrainingDates(training)) {
                     if (training.getMyStrAttempts().length() > 0 && training.getMyAttempts().size() > 0) {
 

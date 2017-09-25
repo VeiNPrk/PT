@@ -3,6 +3,8 @@ package com.example.vnprk.prisontrainings;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -56,7 +58,7 @@ public class AnimationClass {
             public void onAnimationEnd(Animation animation) {
                 /*tv.setText(text);
                 tv.startAnimation(in);*/
-                setValueToView(view, value, typeView);
+                setValueToView(view, null,  null, value, typeView);
 
             }
 
@@ -68,7 +70,7 @@ public class AnimationClass {
         return out;
     }
 
-    public Animation getAlphaAnimation(View _view, final int typeView, Object _value){
+    public Animation getAlphaAnimation(View _view, final PagerAdapter pagerAdapter, final View layout, final int typeView, Object _value){
         view=_view;
         value=_value;
 
@@ -79,12 +81,13 @@ public class AnimationClass {
 
             @Override
             public void onAnimationStart(Animation animation) {
-
+                //setValueToView(view, pagerAdapter, layout, value, typeView);
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                setValueToView(view, value, typeView);
+
+                setValueToView(view, pagerAdapter, layout, value, typeView);
                 //view.startAnimation(in);
             }
 
@@ -96,15 +99,24 @@ public class AnimationClass {
         return out;
     }
 
-    private void setValueToView(View view, Object value, int typeView){
+    private void setValueToView(View view, PagerAdapter pagerAdapter, View layout, Object value, int typeView){
+
         switch (typeView){
             case 0:
                 ((TextView)view).setText((String)value);
+                view.startAnimation(in);
                 break;
             case 1:
                 ((ImageView)view).setImageDrawable((Drawable)value);
+                view.startAnimation(in);
+                break;
+            case 2:
+                pagerAdapter.notifyDataSetChanged();
+                ((ViewPager)view).setCurrentItem((int)value);
+                layout.startAnimation(in);
                 break;
         }
-        view.startAnimation(in);
+        //view.startAnimation(in);
+
     }
 }

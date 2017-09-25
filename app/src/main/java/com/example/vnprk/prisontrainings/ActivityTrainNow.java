@@ -1,15 +1,11 @@
 package com.example.vnprk.prisontrainings;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 
 import android.util.Log;
@@ -18,9 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.Date;
 
@@ -169,6 +162,7 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
     }
 
     private void goToInfo() {
+		//Intent intent = new Intent(ActivityTrainNow.this, ActivityTrainInfo.class);
 		Intent intent = new Intent(ActivityTrainNow.this, ActivityTrainInfo.class);
 		intent.putExtra(ClassTraining.KEY_TR_TYPE, training.getTypeTrening());
         intent.putExtra(ClassTraining.KEY_TR_LVL, training.getLvlTrening());
@@ -188,26 +182,11 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 			    training.save();
 			}
 			else{
-				Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_train_now),getString(R.string.snack_more_attempt), Snackbar.LENGTH_LONG)
-						.setAction("Action", null);
-				View snackbarView = snackbar.getView();
-				TextView snackTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-				snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
-				snackbar.setDuration(3000); // 8 секунд
-				snackbar.show();
-				///Toast.makeText(this,getString(R.string.snack_more_attempt),Toast.LENGTH_LONG).show();
+				showSnackBar(getString(R.string.snack_more_attempt),2700);
 			}
 		}
 		else{
-			//может заменить на диалог
-			Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_train_now),getString(R.string.snack_null_attempt), Snackbar.LENGTH_LONG)
-					.setAction("Action", null);
-			View snackbarView = snackbar.getView();
-			TextView snackTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-			snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
-			snackbar.setDuration(3000); // 8 секунд
-			snackbar.show();
-			//Toast.makeText(this,getString(R.string.snack_null_attempt),Toast.LENGTH_LONG).show();
+			showSnackBar(getString(R.string.snack_null_attempt),2700);
 		}
 	}
 	
@@ -251,14 +230,16 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 	}
 	
 	private void checkLevelTraining(){
-		if(training.checkAttempts())
+		if(training.checkAttempts()) {
 			imCheck.setVisibility(View.VISIBLE);
+			showSnackBar(getString(R.string.snack_next_level),2700);
+		}
         else
             imCheck.setVisibility(View.INVISIBLE);
 	}
 
 	private void startInfoActivityTransition(Intent intent){
-		ActivityOptionsCompat options = ActivityOptionsCompat
+		/*ActivityOptionsCompat options = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this,
                         Pair.create((View)imTraining, getString(R.string.activity_image_trans)),
 						Pair.create((View)tvNameTraining, getString(R.string.activity_name_trans)),
@@ -267,16 +248,17 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			startActivity(intent, options.toBundle());
 		}
-		else
+		else*/
 			startActivity(intent);
 	}
 	
 	@Override
 	public void onBackPressed()
 	{
-		dialog.show(getSupportFragmentManager(), "MyDialog");
-		// code here to show dialog
-		//super.onBackPressed();  // optional depending on your needs
+		if(cashStrMyAttempts.length()!=training.getMyStrAttempts().length())
+			dialog.show(getSupportFragmentManager(), "MyDialog");
+		else
+			super.onBackPressed();
 	}
 
 	@Override
@@ -304,5 +286,15 @@ public class ActivityTrainNow extends AppCompatActivity implements MyDialogFragm
 	@Override
 	public void noClicked(DialogFragment dialog) {
 
+	}
+
+	private void showSnackBar(String text, int time)	{
+		Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_train_now),text, Snackbar.LENGTH_LONG)
+				.setAction("Action", null);
+		View snackbarView = snackbar.getView();
+		TextView snackTextView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+		snackTextView.setTextColor(ContextCompat.getColor(this,R.color.colorIcons));
+		snackbar.setDuration(time); // 8 секунд
+		snackbar.show();
 	}
 }

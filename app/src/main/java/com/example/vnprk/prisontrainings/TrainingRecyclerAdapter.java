@@ -88,12 +88,13 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
         final ImageView ivTrainIcon = (ImageView)view.findViewById(R.id.iv_icon_train);
         final TextView tvTrainName = (TextView)view.findViewById(R.id.tv_tr_name);
         final TextView tvTrainLevel = (TextView)view.findViewById(R.id.tv_tr_level);
+        final TextView tvTrainNeed = (TextView)view.findViewById(R.id.tv_tr_need);
         final TrainingViewHolder viewHolder = new TrainingViewHolder(view);
         view.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 int position = viewHolder.getAdapterPosition();
-                trainingClickListener.onTrainingClick(ivTrainIcon, tvTrainName, tvTrainLevel, position);
+                trainingClickListener.onTrainingClick(ivTrainIcon, tvTrainName, tvTrainLevel, tvTrainNeed, position);
             }
         });
         view.setOnLongClickListener(new View.OnLongClickListener(){
@@ -125,7 +126,7 @@ public class TrainingRecyclerAdapter extends RecyclerView.Adapter<TrainingRecycl
 
 
     public interface TrainingClickListener {
-        void onTrainingClick(View trainImage, View trainName, View trainLevel, int position);
+        void onTrainingClick(View trainImage, View trainName, View trainLevel, View trainNeed, int position);
         void onTrainingLongClick(View trainImage, View trainName, View trainLevel, int position);
     }
 }
